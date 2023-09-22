@@ -46,4 +46,4 @@ jobs:
         run: |
           cd GDResChecker.Checker
           dotnet build /p:Version=${{ github.ref }}
-          dotnet nuget push ./npkg/GDResChecker.Checker.${{ github.ref }}.nupkg --api-key ${{ secret.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push ./npkg/GDResChecker.Checker.${{ github.ref }}.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
