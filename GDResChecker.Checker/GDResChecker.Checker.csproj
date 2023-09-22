@@ -7,6 +7,8 @@
     <Nullable>enable</Nullable>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>gd-res-check</ToolCommandName>
+    <Company>Yet Another AI Ltd</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 

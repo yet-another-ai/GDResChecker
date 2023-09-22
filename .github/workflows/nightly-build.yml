@@ -1,0 +1,47 @@
+name: Nightly Build
+on: 
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        dotnet: ["6", "7", "8"]
+    name: Test on main branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup dotnet environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+
+      - name: Run test
+        run: dotnet test --collect:"XPlat Code Coverage"
+        continue-on-error: ${{ matrix.dotnet == '8' }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  build:
+    name: Build on tag
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup dotnet environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6
+
+      - name: Build
+        run: |
+          cd GDResChecker.Checker
+          dotnet build
