@@ -1,6 +1,8 @@
-using Xunit;
 using GDResChecker.Checker;
+
 using Shouldly;
+
+using Xunit;
 
 namespace GDResChecker.Test;
 
