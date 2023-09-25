@@ -23,7 +23,7 @@ public class CSharpChecker : IResourceChecker
 
             nodeText = nodeText[7..^1];
 
-            if (!allFilesPath.Contains(nodeText) && !nonExistsResources.Contains(nodeText))
+            if (!allFilesPath.Contains(nodeText))
             {
                 nonExistsResources.Add(nodeText);
             }

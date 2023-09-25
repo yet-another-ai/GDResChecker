@@ -1,43 +1,46 @@
+using System.Text.Json;
+
+using Microsoft.Extensions.FileSystemGlobbing;
+
 namespace GDResChecker.Checker;
 
-internal class Program
+public static class Program
 {
-    private readonly static HashSet<string> nonExistsResources = new();
-    private readonly static List<string> allFilesPath = new();
-    private readonly static CSharpChecker cSharpChecker = new();
-    private readonly static SceneChecker sceneChecker = new();
-
-    private static void GetAllFilePath(DirectoryInfo info, int rootPathLength)
+    private static HashSet<string> CheckResourceExists(string rootPath, List<string> allFilesPath)
     {
-        DirectoryInfo[] directories = info.GetDirectories();
-        foreach (DirectoryInfo dir in directories)
-        {
-            GetAllFilePath(dir, rootPathLength);
-        }
+        var sceneChecker = new SceneChecker();
+        var cSharpChecker = new CSharpChecker();
+        var nonExistsResources = new HashSet<string>();
 
-        FileInfo[] files = info.GetFiles();
-        foreach (FileInfo file in files)
+        foreach (string fullPath in allFilesPath.Select(filePath => Path.Combine(rootPath, filePath)))
         {
-            allFilesPath.Add(file.FullName[rootPathLength..]);
-        }
-    }
-
-    private static void CheckResourceExists(string rootPath)
-    {
-        allFilesPath.ForEach(it =>
-        {
-            string fullPath = Path.Combine(rootPath, it);
             if (fullPath.EndsWith(".tscn"))
             {
                 sceneChecker.Check(fullPath, allFilesPath, nonExistsResources);
-                return;
+                continue;
             }
-            if (fullPath.EndsWith(".cs"))
-            {
-                cSharpChecker.Check(fullPath, allFilesPath, nonExistsResources);
-                return;
-            }
-        });
+
+            if (!fullPath.EndsWith(".cs")) continue;
+            cSharpChecker.Check(fullPath, allFilesPath, nonExistsResources);
+        }
+
+        return nonExistsResources;
+    }
+
+    private static string[] ReadIgnoreFile(string directory)
+    {
+        try
+        {
+            return File.ReadAllLines(Path.Combine(directory, ".resCheckerIgnore"))
+                .Select(it => it.Contains('#') ? it.Split('#')[0] : it) // ignore strings after #
+                .Select(it => it.Trim(' ', '\t')) // trim empty characters
+                .Where(it => it != "") // ignore empty string
+                .ToArray();
+        }
+        catch (Exception)
+        {
+            return Array.Empty<string>();
+        }
     }
 
     private static int Main(string[] args)
@@ -46,8 +49,17 @@ internal class Program
 
         string directory = args[0];
         var info = new DirectoryInfo(directory);
-        GetAllFilePath(info, info.FullName.Length + 1);
-        CheckResourceExists(info.FullName);
+        int infoFullNameLength = info.FullName.Length;
+        string[] ignoredGlob = ReadIgnoreFile(info.FullName);
+
+        Matcher matcher = new();
+        matcher.AddInclude("**/*");
+        matcher.AddExcludePatterns(ignoredGlob);
+        var allFilesPath = matcher.GetResultsInFullPath(info.FullName)
+            .Select(it => it[(infoFullNameLength + 1)..].Replace('\\', '/'))
+            .ToList();
+
+        HashSet<string> nonExistsResources = CheckResourceExists(info.FullName, allFilesPath);
 
         if (nonExistsResources.Count == 0)
         {
