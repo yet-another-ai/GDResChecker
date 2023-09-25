@@ -28,13 +28,18 @@ jobs:
           dotnet-quality: preview
 
       - name: Run test
-        run: dotnet test --collect:"XPlat Code Coverage"
+        run: |
+          dotnet build
+          dotnet tool install --global coverlet.console
+          coverlet ./GDResChecker.Test/bin/Debug/net6.0/GDResChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
         continue-on-error: ${{ matrix.dotnet == '8' }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        if: ${{ matrix.dotnet == '6' }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./GDResChecker.Test/coverage.cobertura.xml
 
   build:
     name: Build on tag
