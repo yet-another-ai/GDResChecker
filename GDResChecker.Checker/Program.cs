@@ -31,17 +31,20 @@ public static class Program
     {
         try
         {
-            return File.ReadAllLines(Path.Combine(directory, ".resCheckerIgnore"))
-                .Select(it => it.Contains('#') ? it.Split('#')[0] : it) // ignore strings after #
-                .Select(it => it.Trim(' ', '\t')) // trim empty characters
-                .Where(it => it != "") // ignore empty string
-                .ToArray();
+            return parseIgnoreFileLines(File.ReadAllLines(Path.Combine(directory, ".resCheckerIgnore")));
         }
         catch (Exception)
         {
             return Array.Empty<string>();
         }
     }
+
+    public static string[] parseIgnoreFileLines(string[] fileLines) =>
+        fileLines
+            .Select(it => it.Contains('#') ? it.Split('#')[0] : it) // ignore strings after #
+            .Select(it => it.Trim(' ', '\t')) // trim empty characters
+            .Where(it => it != "") // ignore empty string
+            .ToArray();
 
     private static int Main(string[] args)
     {
