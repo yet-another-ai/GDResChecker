@@ -44,8 +44,16 @@ jobs:
 
       - name: Setup dotnet environment
         uses: actions/setup-dotnet@v3
+        if: ${{ matrix.dotnet != '8' }}
         with:
           dotnet-version: ${{ matrix.dotnet }}
+
+      - name: Setup dotnet preview environment
+        uses: actions/setup-dotnet@v3
+        if: ${{ matrix.dotnet == '8' }}
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+          dotnet-quality: preview
 
       - name: Run test
         run: dotnet test --collect:"XPlat Code Coverage"
