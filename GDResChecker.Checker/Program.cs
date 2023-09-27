@@ -20,7 +20,8 @@ public static class Program
                 continue;
             }
 
-            if (!fullPath.EndsWith(".cs")) continue;
+            if (!fullPath.EndsWith(".cs"))
+                continue;
             cSharpChecker.Check(fullPath, allFilesPath, nonExistsResources);
         }
 
