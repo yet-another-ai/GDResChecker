@@ -1,4 +1,4 @@
-namespace GDResChecker.Checker;
+namespace YetAnotherAI.Godot.ResourceChecker.Console;
 
 public interface IResourceChecker
 {

@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace GDResChecker.Checker;
+namespace YetAnotherAI.Godot.ResourceChecker.Console;
 
 public class SceneChecker : IResourceChecker
 {

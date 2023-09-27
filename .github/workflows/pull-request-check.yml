@@ -68,3 +68,16 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./GDResChecker.Test/coverage.cobertura.xml
+  
+  actions-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      
+      - name: Run action
+        continue-on-error: true
+        uses: ./actions
+        with:
+          project: YetAnotherAI.Godot.ResourceChecker.Test
+  

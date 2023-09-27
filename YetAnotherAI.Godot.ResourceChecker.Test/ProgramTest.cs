@@ -1,10 +1,10 @@
-using GDResChecker.Checker;
-
 using Shouldly;
 
 using Xunit;
 
-namespace GDResChecker.Test;
+using YetAnotherAI.Godot.ResourceChecker.Console;
+
+namespace YetAnotherAI.Godot.ResourceChecker.Test;
 
 public class ProgramTest
 {

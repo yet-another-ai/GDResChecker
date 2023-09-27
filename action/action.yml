@@ -1,0 +1,9 @@
+﻿name: Godot Resource Checker
+description: Check resource existence for Godot
+inputs: 
+  project:
+    description: Specify project path for checker.
+    required: true
+runs: 
+  using: docker
+  image: Dockerfile
