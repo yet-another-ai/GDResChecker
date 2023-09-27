@@ -1,10 +1,14 @@
 # GDResChecker
+[![codecov](https://codecov.io/gh/yet-another-ai/GDResChecker/graph/badge.svg?token=89GA9F64F5)](https://codecov.io/gh/yet-another-ai/GDResChecker)
+![Nightly Build](https://github.com/yet-another-ai/GDResChecker/actions/workflows/nightly-build.yml/badge.svg)
+[![Nuget](https://img.shields.io/nuget/v/YetAnotherAI.Godot.ResourceChecker.Console)](https://www.nuget.org/packages/YetAnotherAI.Godot.ResourceChecker.Console/)
+
 GDResChecker is a tool for Godot resource existence checking which path specified in Scene(.tscn) files and Script(C#) files.
 
 ## Use as command line tool
 ### Install
 ```bash
-dotnet tool install --global GDResChecker
+dotnet tool install --global YetAnotherAI.Godot.ResourceChecker.Console
 ```
 
 ### Usage
@@ -26,9 +30,9 @@ Example:
 ```yml
 check:resources:
   image: mcr.microsoft.com/dotnet/sdk:6.0
-  before_script:
-    - dotnet tool install -g YetAnotherAI.Godot.ResourceChecker.Console
   script:
+    - dotnet tool install -g YetAnotherAI.Godot.ResourceChecker.Console
+    - export PATH="$PATH:/root/.dotnet/tools"
     - check-godot-resource /path/to/your/godot/project
 ```
 
