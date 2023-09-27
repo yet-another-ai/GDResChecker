@@ -1,8 +1,6 @@
-using System.Text.Json;
-
 using Microsoft.Extensions.FileSystemGlobbing;
 
-namespace GDResChecker.Checker;
+namespace YetAnotherAI.Godot.ResourceChecker.Console;
 
 public static class Program
 {
@@ -49,7 +47,13 @@ public static class Program
 
     private static int Main(string[] args)
     {
-        Console.WriteLine("Start checking resources existence...");
+        if (args.Length == 0)
+        {
+            System.Console.WriteLine("Usage: check-godot-resource <folder-path>");
+            return 1;
+        }
+
+        System.Console.WriteLine("Start checking resources existence...");
 
         string directory = args[0];
         var info = new DirectoryInfo(directory);
@@ -67,13 +71,13 @@ public static class Program
 
         if (nonExistsResources.Count == 0)
         {
-            Console.WriteLine("All resource exists.");
+            System.Console.WriteLine("All resource exists.");
             return 0;
         }
 
         foreach (string path in nonExistsResources)
         {
-            Console.WriteLine("Resource not exists: " + path);
+            System.Console.WriteLine("Resource not exists: " + path);
         }
 
         return 1;

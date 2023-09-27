@@ -32,7 +32,7 @@ jobs:
         run: |
           dotnet build
           dotnet tool install --global coverlet.console
-          coverlet ./GDResChecker.Test/bin/Debug/net6.0/GDResChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
+          coverlet ./YetAnotherAI.Godot.ResourceChecker.Test/bin/Debug/net6.0/YetAnotherAI.Godot.ResourceChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
         continue-on-error: ${{ matrix.dotnet == '8' }}
 
       - name: Upload coverage to Codecov
@@ -40,7 +40,7 @@ jobs:
         if: ${{ matrix.dotnet == '6' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./GDResChecker.Test/coverage.cobertura.xml
+          files: ./YetAnotherAI.Godot.ResourceChecker.Test/coverage.cobertura.xml
 
   build:
     name: Build on tag
@@ -57,6 +57,6 @@ jobs:
 
       - name: Build
         run: |
-          cd GDResChecker.Checker
+          cd YetAnotherAI.Godot.ResourceChecker.Console
           dotnet build /p:Version=${{ github.ref_name }}
-          dotnet nuget push ./nupkg/GDResChecker.Checker.${{ github.ref_name }}.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push ./nupkg/YetAnotherAI.Godot.ResourceChecker.Console.${{ github.ref_name }}.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json

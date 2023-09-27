@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace GDResChecker.Checker;
+namespace YetAnotherAI.Godot.ResourceChecker.Console;
 
 public class CSharpChecker : IResourceChecker
 {

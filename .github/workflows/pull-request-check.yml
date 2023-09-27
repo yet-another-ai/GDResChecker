@@ -30,7 +30,7 @@ jobs:
       - name: Lint
         run: |
           dotnet tool install -g dotnet-format
-          dotnet format -v diag --verify-no-changes 'GDResChecker.sln'
+          dotnet format -v diag --verify-no-changes 'YetAnotherAI.Godot.ResourceChecker.sln'
 
   test:
     name: Test on pull request
@@ -59,7 +59,7 @@ jobs:
         run: |
           dotnet build
           dotnet tool install --global coverlet.console
-          coverlet ./GDResChecker.Test/bin/Debug/net6.0/GDResChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
+          coverlet ./YetAnotherAI.Godot.ResourceChecker.Test/bin/Debug/net6.0/YetAnotherAI.Godot.ResourceChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
         continue-on-error: ${{ matrix.dotnet == '8' }}
 
       - name: Upload coverage to Codecov
@@ -67,4 +67,18 @@ jobs:
         if: ${{ matrix.dotnet == '6' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./GDResChecker.Test/coverage.cobertura.xml
+          files: ./YetAnotherAI.Godot.ResourceChecker.Test/coverage.cobertura.xml
+  
+  actions-test:
+    name: Action Testing
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      
+      - name: Run action
+        continue-on-error: true
+        uses: ./action
+        with:
+          project: action
+  

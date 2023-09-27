@@ -31,7 +31,7 @@ jobs:
         run: |
           dotnet build
           dotnet tool install --global coverlet.console
-          coverlet ./GDResChecker.Test/bin/Debug/net6.0/GDResChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
+          coverlet ./YetAnotherAI.Godot.ResourceChecker.Test/bin/Debug/net6.0/YetAnotherAI.Godot.ResourceChecker.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
         continue-on-error: ${{ matrix.dotnet == '8' }}
 
       - name: Upload coverage to Codecov
@@ -42,7 +42,7 @@ jobs:
           files: ./GDResChecker.Test/coverage.cobertura.xml
 
   build:
-    name: Build on tag
+    name: Build nightly
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -56,5 +56,5 @@ jobs:
 
       - name: Build
         run: |
-          cd GDResChecker.Checker
+          cd YetAnotherAI.Godot.ResourceChecker.Console
           dotnet build
