@@ -77,7 +77,7 @@ jobs:
       
       - name: Run action
         continue-on-error: true
-        uses: ./actions
+        uses: ./action
         with:
           project: YetAnotherAI.Godot.ResourceChecker.Test
   
