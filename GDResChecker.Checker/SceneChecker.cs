@@ -5,17 +5,15 @@ namespace GDResChecker.Checker;
 public class SceneChecker : IResourceChecker
 {
     public void Check(string filePath, List<string> allFilesPath, HashSet<string> nonExistsResources)
-    {
-        this.Check(File.ReadAllLines(filePath), allFilesPath, nonExistsResources);
-    }
+        => this.Check(File.ReadAllLines(filePath), allFilesPath, nonExistsResources);
 
     private static string GetResourceAttribute(string line)
     {
         string tinyXml = line.Replace("[", "<").Replace("]", "/>");
-        return XElement.Parse(tinyXml)
+        return XElement
+            .Parse(tinyXml)
             .Attributes()
-            .Where(it => it.Name == "path")
-            .First()
+            .First(it => it.Name == "path")
             .Value
             .Replace("res://", "");
     }
@@ -26,7 +24,7 @@ public class SceneChecker : IResourceChecker
         foreach (string? line in lines)
         {
             string resPath = GetResourceAttribute(line);
-            if (!allFilesPath.Contains(resPath) && !nonExistsResources.Contains(resPath))
+            if (!allFilesPath.Contains(resPath))
                 nonExistsResources.Add(resPath);
         }
     }
