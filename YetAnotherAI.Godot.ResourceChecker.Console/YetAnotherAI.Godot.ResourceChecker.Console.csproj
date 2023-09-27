@@ -10,7 +10,7 @@
     <Company>Yet Another AI Ltd</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath>./nupkg</PackageOutputPath>
-    <PackageReadmeFile>../README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RootNamespace>YetAnotherAI.Godot.ResourceChecker.Console</RootNamespace>
   </PropertyGroup>
   
