@@ -70,6 +70,7 @@ jobs:
           files: ./YetAnotherAI.Godot.ResourceChecker.Test/coverage.cobertura.xml
   
   actions-test:
+    name: Action Testing
     runs-on: ubuntu-20.04
     steps:
       - name: Clone repository
