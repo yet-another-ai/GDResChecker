@@ -31,7 +31,7 @@ public static class Program
     {
         try
         {
-            return parseIgnoreFileLines(File.ReadAllLines(Path.Combine(directory, ".resCheckerIgnore")));
+            return ParseIgnoreFileLines(File.ReadAllLines(Path.Combine(directory, ".resCheckerIgnore")));
         }
         catch (Exception)
         {
@@ -39,7 +39,7 @@ public static class Program
         }
     }
 
-    public static string[] parseIgnoreFileLines(string[] fileLines) =>
+    public static string[] ParseIgnoreFileLines(string[] fileLines) =>
         fileLines
             .Select(it => it.Contains('#') ? it.Split('#')[0] : it) // ignore strings after #
             .Select(it => it.Trim(' ', '\t')) // trim empty characters

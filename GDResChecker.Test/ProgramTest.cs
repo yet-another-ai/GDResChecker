@@ -1,4 +1,4 @@
-﻿using GDResChecker.Checker;
+using GDResChecker.Checker;
 
 using Shouldly;
 
@@ -23,7 +23,7 @@ public class ProgramTest
             "# /path/third"
         };
 
-        string[] actual = Program.parseIgnoreFileLines(forParse);
+        string[] actual = Program.ParseIgnoreFileLines(forParse);
 
         actual.ShouldBe(expected);
     }
