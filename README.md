@@ -9,14 +9,28 @@ dotnet tool install --global GDResChecker
 
 ### Usage
 ```bash
-gd-res-check /path/to/your/godot/project
+check-godot-resource /path/to/your/godot/project
 ```
 
 ## Use as GitHub action
-TODO
+Add this step to your action workflows.
+```yml
+    steps:
+      - use: yet-another-ai/GDResChecker/action@main
+        with:
+          project: /path/to/your/godot/project
+```
 
 ## Use it in GitLab Pipelines
-TODO
+Example:
+```yml
+check:resources:
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  before_script:
+    - dotnet tool install -g YetAnotherAI.Godot.ResourceChecker.Console
+  script:
+    - check-godot-resource /path/to/your/godot/project
+```
 
 ## How It Works
 1. Collect all files path in your project directories recursively.
