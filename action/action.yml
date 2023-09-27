@@ -1,4 +1,4 @@
-﻿name: Godot Resource Checker
+name: Godot Resource Checker
 description: Check resource existence for Godot
 inputs: 
   project:
