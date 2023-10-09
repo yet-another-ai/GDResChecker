@@ -30,7 +30,7 @@ public static class Program
     {
         try
         {
-            return ParseIgnoreFileLines(File.ReadAllLines(Path.Combine(directory, ".resCheckerIgnore")));
+            return ParseIgnoreFileLines(File.ReadAllLines(Path.Combine(directory, ".rescheckerignore")));
         }
         catch (Exception)
         {
