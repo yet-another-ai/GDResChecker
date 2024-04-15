@@ -37,20 +37,20 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet: ['6', '7', '8']
+        dotnet: ['8', '9']
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
 
       - name: Setup dotnet environment
         uses: actions/setup-dotnet@v3
-        if: ${{ matrix.dotnet != '8' }}
+        if: ${{ matrix.dotnet == '8' }}
         with:
           dotnet-version: ${{ matrix.dotnet }}
 
       - name: Setup dotnet preview environment
         uses: actions/setup-dotnet@v3
-        if: ${{ matrix.dotnet == '8' }}
+        if: ${{ matrix.dotnet != '8' }}
         with:
           dotnet-version: ${{ matrix.dotnet }}
           dotnet-quality: preview
@@ -60,7 +60,7 @@ jobs:
           dotnet build
           dotnet tool install --global coverlet.console
           coverlet ./YetAnotherAI.Godot.ResourceChecker.Test/bin/Debug/net6.0/YetAnotherAI.Godot.ResourceChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
-        continue-on-error: ${{ matrix.dotnet == '8' }}
+        continue-on-error: ${{ matrix.dotnet != '8' }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
