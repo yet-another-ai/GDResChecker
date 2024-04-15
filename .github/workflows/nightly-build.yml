@@ -7,7 +7,7 @@ jobs:
   test:
     strategy:
       matrix:
-        dotnet: ["6", "7", "8"]
+        dotnet: ['8', '9']
     name: Test on main branch
     runs-on: ubuntu-latest
     steps:
@@ -16,13 +16,13 @@ jobs:
 
       - name: Setup dotnet environment
         uses: actions/setup-dotnet@v3
-        if: ${{ matrix.dotnet != '8' }}
+        if: ${{ matrix.dotnet == '8' }}
         with:
           dotnet-version: ${{ matrix.dotnet }}
 
       - name: Setup dotnet preview environment
         uses: actions/setup-dotnet@v3
-        if: ${{ matrix.dotnet == '8' }}
+        if: ${{ matrix.dotnet != '8' }}
         with:
           dotnet-version: ${{ matrix.dotnet }}
           dotnet-quality: preview
@@ -32,11 +32,11 @@ jobs:
           dotnet build
           dotnet tool install --global coverlet.console
           coverlet ./YetAnotherAI.Godot.ResourceChecker.Test/bin/Debug/net6.0/YetAnotherAI.Godot.ResourceChecker.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
-        continue-on-error: ${{ matrix.dotnet == '8' }}
+        continue-on-error: ${{ matrix.dotnet != '8' }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
-        if: ${{ matrix.dotnet == '6' }}
+        if: ${{ matrix.dotnet == '8' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./GDResChecker.Test/coverage.cobertura.xml
@@ -52,7 +52,7 @@ jobs:
       - name: Setup dotnet environment
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6
+          dotnet-version: 8
 
       - name: Build
         run: |

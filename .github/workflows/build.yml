@@ -8,7 +8,7 @@ jobs:
   test:
     strategy:
       matrix:
-        dotnet: ["6", "7", "8"]
+        dotnet: ["8", "9"]
     name: Test on main branch
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Setup dotnet preview environment
         uses: actions/setup-dotnet@v3
-        if: ${{ matrix.dotnet == '8' }}
+        if: ${{ matrix.dotnet == '9' }}
         with:
           dotnet-version: ${{ matrix.dotnet }}
           dotnet-quality: preview
