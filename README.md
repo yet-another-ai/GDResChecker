@@ -29,7 +29,7 @@ Add this step to your action workflows.
 Example:
 ```yml
 check:resources:
-  image: mcr.microsoft.com/dotnet/sdk:6.0
+  image: mcr.microsoft.com/dotnet/sdk:8.0
   script:
     - dotnet tool install -g YetAnotherAI.Godot.ResourceChecker.Console
     - export PATH="$PATH:/root/.dotnet/tools"
