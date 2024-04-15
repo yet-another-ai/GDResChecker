@@ -59,7 +59,7 @@ jobs:
         run: |
           dotnet build
           dotnet tool install --global coverlet.console
-          coverlet ./YetAnotherAI.Godot.ResourceChecker.Test/bin/Debug/net6.0/YetAnotherAI.Godot.ResourceChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
+          coverlet ./YetAnotherAI.Godot.ResourceChecker.Test/bin/Debug/net${{ matrix.dotnet }}.0/YetAnotherAI.Godot.ResourceChecker.Test.dll --target 'dotnet' --targetargs "test --no-build" --format cobertura
         continue-on-error: ${{ matrix.dotnet != '8' }}
 
       - name: Upload coverage to Codecov
